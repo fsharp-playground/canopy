@@ -1,3 +1,6 @@
+(* what is box *)
+#indent "off"
+
 [<AutoOpen>]
 module canopy.core
 
@@ -30,6 +33,7 @@ let phantomJS = PhantomJS
 let phantomJSProxyNone = PhantomJSProxyNone
   
 let mutable browsers = []
+
 
 //misc
 let failsWith message = failureMessage <- message
@@ -117,13 +121,13 @@ let suggestOtherSelectors cssSelector =
             var classes = [];
             var all = document.getElementsByTagName('*');
             for (var i=0, max=all.length; i < max; i++) {
-	            var ary = all[i].className.split(' ');
-	            for(var j in ary){
-		            if(ary[j] === ''){
-			            ary.splice(j,1);
-			            j--;
-		            }
-	            }
+                var ary = all[i].className.split(' ');
+                for(var j in ary){
+                    if(ary[j] === ''){
+                        ary.splice(j,1);
+                        j--;
+                    }
+                }
                classes = classes.concat(ary);
             }
             return classes;"""
@@ -131,27 +135,27 @@ let suggestOtherSelectors cssSelector =
             var ids = [];
             var all = document.getElementsByTagName('*');
             for (var i=0, max=all.length; i < max; i++) {
-	            if(all[i].id !== "") {
-		            ids.push(all[i].id);
-	            }   
+                if(all[i].id !== "") {
+                    ids.push(all[i].id);
+                }   
             }
             return ids;"""
         let valuesViaJs = """
             var values = [];
             var all = document.getElementsByTagName('*');
             for (var i=0, max=all.length; i < max; i++) {
-	            if(all[i].value && all[i].value !== "") {
-		            values.push(all[i].value);
-	            }   
+                if(all[i].value && all[i].value !== "") {
+                    values.push(all[i].value);
+                }   
             }
             return values;"""
         let textsViaJs = """
             var texts = [];
             var all = document.getElementsByTagName('*');
             for (var i=0, max=all.length; i < max; i++) {
-	            if(all[i].text && all[i].tagName !== 'SCRIPT' && all[i].text !== "") {
-		            texts.push(all[i].text);
-	            }   
+                if(all[i].text && all[i].tagName !== 'SCRIPT' && all[i].text !== "") {
+                    texts.push(all[i].text);
+                }   
             }
             return texts;"""
         let classes = js classesViaJs :?> System.Collections.ObjectModel.ReadOnlyCollection<System.Object> |> Seq.map (fun item -> "." + item.ToString()) |> Array.ofSeq
@@ -413,6 +417,19 @@ let dismissAlert() =
         browser.SwitchTo().Alert().Dismiss()
         true)
     
+(* what is box? *)
+module Jw = 
+    open System
+    let _byte = 'c'B
+    let _byteToObject = box _byte
+    let _objectToByte = unbox<byte> _byteToObject
+
+    let _date = new DateTime(2015,10,10)
+
+    let _dateToObject = box _date
+    let _objectToDate = unbox<DateTime>  _dateToObject
+    ()
+
 //assertions    
 let ( == ) item value =
     match box item with
