@@ -433,9 +433,23 @@ module Jw =
         match x with 
         | :? String -> "You are string"
         | :? DateTime -> "You are DateTime"
-        | _ -> "How are you?"
+        | _ -> "Who are you?"
 
     let str = checkType (DateTime(2015,10,10))
+
+
+    // error FS0008: This runtime coercion or type test from type 'a to int    
+    // involves an indeterminate type based on information prior to this program point. 
+    // Runtime type tests are not allowed on some types. Further type annotations are needed.
+    let checkTypeWithBox x =
+        match box x with 
+        | :? String -> "You are string"
+        | :? int -> "You are integer"
+        | _ -> "Who are you?"
+
+    let rs' = checkTypeWithBox 100
+    let rs'' = checkTypeWithBox "Hello"
+
 
 //assertions    
 let ( == ) item value =
