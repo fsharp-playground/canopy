@@ -69,6 +69,7 @@ let failSuite (ex: Exception) (suite : suite) =
         reporter.testEnd test.Id 
     suite.Tests |> List.iter (fun test -> reportFailedTest ex test)
 
+(* how this function work? *)
 let run () =
     reporter.suiteBegin()
     let stopWatch = new Diagnostics.Stopwatch()
