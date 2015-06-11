@@ -428,7 +428,14 @@ module Jw =
 
     let _dateToObject = box _date
     let _objectToDate = unbox<DateTime>  _dateToObject
-    ()
+
+    let checkType (x:obj) =
+        match x with 
+        | :? String -> "You are string"
+        | :? DateTime -> "You are DateTime"
+        | _ -> "How are you?"
+
+    let str = checkType (DateTime(2015,10,10))
 
 //assertions    
 let ( == ) item value =
